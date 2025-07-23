@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
       lineEmailInfo.style.display = 'none';
     }
     
-    // ส่วนจัดการเบอร์โทรศัพท์ (เพิ่มใหม่)
+    // ส่วนจัดการเบอร์โทรศัพท์
     const linePhoneInfo = document.getElementById('line-phone-info');
     if (linePhone) {
       document.getElementById('phone').value = linePhone;
@@ -105,8 +105,8 @@ document.addEventListener('DOMContentLoaded', function() {
         displayName: profile.displayName,
         pictureUrl: profile.pictureUrl || '',
         statusMessage: profile.statusMessage || '',
-        email: document.getElementById('email').value || lineEmail, // ใช้ค่าอีเมลจาก LINE ถ้าไม่ได้กรอก
-        phone: document.getElementById('phone').value || linePhone, // ใช้ค่าเบอร์จาก LINE ถ้าไม่ได้กรอก
+        email: document.getElementById('email').value || lineEmail,
+        phone: document.getElementById('phone').value || linePhone,
         comments: document.getElementById('comments').value,
         timestamp: new Date().toISOString()
       };
@@ -172,7 +172,7 @@ async function sendToGoogleSheets(data) {
     
     const response = await fetch(url, {
       method: 'POST',
-      mode: 'no-cors', // ใช้ no-cors mode
+      mode: 'no-cors',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -181,7 +181,6 @@ async function sendToGoogleSheets(data) {
     });
     
     // เนื่องจากใช้ no-cors เราจะไม่สามารถอ่าน response ได้โดยตรง
-    // ให้ถือว่าส่งสำเร็จหากไม่เกิด error
     return {status: 'success', message: 'Data submitted'};
     
   } catch (error) {
