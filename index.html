@@ -41,28 +41,24 @@
       <div id="form-section">
         <h2>ข้อมูลเพิ่มเติม</h2>
         <form id="additional-form">
-         <div class="info-row">
-            <div class="info-label">ชื่อ นามสกุล ที่อยู่ในการจัดส่ง:</div>
+          <div class="info-row">
+            <div class="info-label">การจัดส่ง:</div>
             <div class="info-value">
-              <textarea id="comments" name="comments" rows="5" placeholder=" Example: นายสมชาย ใจดี
-ที่อยู่: 123/45 หมู่บ้านสุขใจ ซอยสุขุมวิท 77
-ตำบลพระโขนงเหนือ อำเภอเขตวัฒนา
-จังหวัดกรุงเทพมหานคร 10110"></textarea>
+              <textarea id="comments" name="comments" rows="3" placeholder="ชื่อ นาสกุล ที่อยู่ เบอร์โทร ในการจัดส่ง"></textarea>
             </div>
           </div>
-         <div class="info-row">
-            <div class="info-label">เบอร์โทรศัพท์:</div>
-            <div class="info-value">
-              <input type="tel" id="phone" name="phone" placeholder="Example: 0901234567" required>
-            </div>
-          </div>
-                
+          
           <div style="text-align: center; margin-top: 30px;">
             <button type="submit">
               <span style="display: inline-block; margin-right: 8px;">✓</span> ส่งข้อมูล
             </button>
           </div>
         </form>
+      </div>
+
+      <div id="submit-loading" class="submit-loading" style="display: none;">
+        <img src="https://res.cloudinary.com/dwk1pevup/image/upload/v1734915067/waiting_kty1qc.gif" alt="กำลังส่งข้อมูล">
+        <p>กำลังส่งข้อมูล... กรุณารอสักครู่</p>
       </div>
     </div>
     
