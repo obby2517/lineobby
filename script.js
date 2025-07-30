@@ -1,6 +1,6 @@
 // ตั้งค่า LIFF ID และ Google Apps Script URL
 const CONFIG = {
-  liffId: "2007320827-YerWeZvN",
+  liffId: "2007320827-m3ygVAKM",
   googleScriptUrl: "https://script.google.com/macros/s/AKfycbzAyZdIfSnp8aCarZPZQ0ueZ3S5YYOEjBsS3EntQCMphMeASv1eY2BzDyWYcC3YKKKf/exec",
   defaultProfileImage: "https://i.imgur.com/3J3WQwX.png"
 };
