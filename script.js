@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
         pictureUrl: profile.pictureUrl || '',
         statusMessage: profile.statusMessage || '',
         email: document.getElementById('email').value || lineEmail,
-        phone: document.getElementById('phone').value || linePhone,
+        phone: document.getElementById('text').value || linePhone,
         comments: document.getElementById('comments').value,
         timestamp: new Date().toISOString()
       };
