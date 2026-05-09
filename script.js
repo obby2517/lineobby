@@ -1,9 +1,7 @@
-// ตั้งค่า LIFF ID และ Google Apps Script
-const liffId = "2007320827-m3ygVAKM";                    // ← เปลี่ยนเป็นของจริง
-const googleScriptUrl = "https://script.google.com/macros/s/AKfycbzAyZdIfSnp8aCarZPZQ0ueZ3S5YYOEjBsS3EntQCMphMeASv1eY2BzDyWYcC3YKKKf/exec"; // ← เปลี่ยนเป็นของจริง
+const liffId = "2007320827-m3ygVAKM"; 
+const googleScriptUrl = "https://script.google.com/macros/s/AKfycbzAyZdIfSnp8aCarZPZQ0ueZ3S5YYOEjBsS3EntQCMphMeASv1eY2BzDyWYcC3YKKKf/exec"; 
 
 document.addEventListener('DOMContentLoaded', function() {
-
   // Modal
   const modal = document.getElementById('profile-modal');
   const modalImg = document.getElementById('modal-profile-image');
@@ -29,34 +27,29 @@ document.addEventListener('DOMContentLoaded', function() {
       ]);
     })
     .then(([profile, idToken]) => {
-      // ซ่อน loading แสดงเนื้อหา
       document.getElementById('loading').style.display = 'none';
       document.getElementById('profile').style.display = 'block';
 
       // แสดงข้อมูลพื้นฐาน
       document.getElementById('display-name').textContent = profile.displayName;
       document.getElementById('user-id').textContent = profile.userId;
-      document.getElementById('status-message').textContent = 
-        profile.statusMessage || 'ไม่ได้ตั้งค่าสถานะ';
+      document.getElementById('status-message').textContent = profile.statusMessage || 'ไม่ได้ตั้งค่าสถานะ';
 
-      // ดึงข้อมูลจาก ID Token
       const lineEmail = idToken?.email || '';
       const linePhone = idToken?.phone_number || '';
 
       // จัดการอีเมล
-      const emailInfo = document.getElementById('line-email-info');
       if (lineEmail) {
         document.getElementById('email').value = lineEmail;
         document.getElementById('line-email-value').textContent = lineEmail;
-        emailInfo.style.display = 'block';
+        document.getElementById('line-email-info').style.display = 'block';
         document.getElementById('email').readOnly = true;
       }
 
       // จัดการเบอร์โทร
-      const phoneInfo = document.getElementById('line-phone-info');
       if (linePhone) {
         document.getElementById('line-phone-value').textContent = linePhone;
-        phoneInfo.style.display = 'block';
+        document.getElementById('line-phone-info').style.display = 'block';
       }
 
       // แสดงรูปโปรไฟล์
@@ -73,13 +66,20 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('additional-form').addEventListener('submit', function(e) {
         e.preventDefault();
 
+        const fullName = document.getElementById('full-name').value.trim();
+
+        if (!fullName) {
+          alert('กรุณากรอก ชื่อ นามสกุล');
+          return;
+        }
+
         const formData = {
           lineUserId: profile.userId,
           displayName: profile.displayName,
+          fullName: fullName,                    // สำคัญ
           pictureUrl: profile.pictureUrl || '',
           statusMessage: profile.statusMessage || '',
-          email: document.getElementById('email').value,
-          fullName: document.getElementById('full-name').value.trim(),
+          email: document.getElementById('email').value.trim(),
           phone: linePhone,
           comments: document.getElementById('comments').value.trim(),
           timestamp: new Date().toISOString(),
@@ -87,6 +87,8 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         const submitBtn = document.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+
         submitBtn.innerHTML = '<span class="spinner"></span> กำลังส่งข้อมูล...';
         submitBtn.disabled = true;
 
@@ -100,9 +102,8 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error(error);
             submitBtn.innerHTML = '❌ ส่งข้อมูลไม่สำเร็จ';
             submitBtn.style.backgroundColor = '#f44336';
-
             setTimeout(() => {
-              submitBtn.innerHTML = '<span style="display: inline-block; margin-right: 8px;">✓</span> ส่งข้อมูล';
+              submitBtn.innerHTML = originalText;
               submitBtn.style.backgroundColor = '';
               submitBtn.disabled = false;
             }, 3000);
@@ -121,15 +122,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// ส่งข้อมูลไป Google Apps Script
 async function sendToGoogleSheets(data) {
   const response = await fetch(googleScriptUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
-    mode: 'no-cors'        // ใช้ได้กับ Google Apps Script
+    mode: 'no-cors'
   });
-
-  // no-cors จะไม่สามารถอ่าน body ได้ แต่ส่งสำเร็จถือว่า OK
   return { status: 'success' };
 }
